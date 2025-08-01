@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>📬 Contact Us - 🧮 Calx</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <style>
+    body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #0f0f0f;
+  color: white;
+}
+
+nav {
+  background: linear-gradient(45deg, #00f2fe, #4facfe, #00f2fe);
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+nav a {
+  color: #fff;
+  margin: 0 15px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+nav a:hover {
+  text-shadow: 0 0 10px #00f2fe;
+}
+
+.contact-container {
+  max-width: 500px;
+  margin: 50px auto;
+  background: #1e1e1e;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 0 20px #4facfe;
+}
+
+h1 {
+  text-align: center;
+  color: #4facfe;
+  text-shadow: 0 0 5px cyan;
+}
+
+form input, form textarea {
+  width: 100%;
+  margin: 10px 0;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #2d2d2d;
+  color: white;
+  font-size: 16px;
+}
+
+form button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  background: linear-gradient(135deg, #ff6ec4, #7873f5);
+  color: white;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+form button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px #ff6ec4;
+}
+
+#status-msg {
+  margin-top: 15px;
+  font-weight: bold;
+  text-align: center;
+}
+
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html">🧮 Calx</a>
+      <a href="about.html">📘 About</a>
+      <a href="contact.html">📬 Contact</a>
+    </nav>
+  </header>
+
+  <main class="contact-container">
+    <h1>💬 Get in Touch</h1>
+    <form id="contact-form">
+      <input type="hidden" name="time" id="current-time">
+      <input type="text" name="user_name" placeholder="Your Name" required />
+      <input type="email" name="user_email" placeholder="Your Email" required />
+      <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+      <button type="submit">🚀 Send</button>
+      <p id="status-msg"></p>
+    </form>
+  </main>
+
+  <script>
+  emailjs.init("G72IgvqCKuUwf01rX");
+
+  document.getElementById("contact-form").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    // 🕓 Set time first!
+    document.getElementById("current-time").value = new Date().toLocaleString();
+
+    emailjs.sendForm("service_4fxtjs8", "template_i5ji9jr", this)
+      .then(() => {
+        document.getElementById("status-msg").textContent = "✅ Message sent successfully!";
+        this.reset();
+      }, (error) => {
+        document.getElementById("status-msg").textContent = "❌ Failed to send. Try again.";
+        console.error(error);
+      });
+  });
+</script>
+
+</body>
+</html>

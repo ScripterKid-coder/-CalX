@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Graphing Calculator - 🧮 Calx</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark">
+  <header>
+    <nav>
+      <a href="index.html">🧮 Calx</a>
+      <a href="converter.html">📏 Convert</a>
+      <a href="graph.html">📊 Graph</a>
+      <a href="about.html">📘 About</a>
+      <a href="contact.html">📬 Contact</a>
+      <button id="toggleTheme">🎨 Theme</button>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h2>📊 Graph Function: y = f(x)</h2>
+    <input id="funcInput" type="text" placeholder="Enter equation like x^2 + 3x - 2" style="width: 100%; padding: 10px;" />
+    <button onclick="plotGraph()">📈 Plot</button>
+    <canvas id="graphCanvas" width="600" height="400"></canvas>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    function parseEquation(eq, x) {
+      try {
+        return eval(eq.replace(/x/g, `(${x})`).replace(/\^/g, '**'));
+      } catch {
+        return NaN;
+      }
+    }
+
+    function plotGraph() {
+      const input = document.getElementById("funcInput").value;
+      const ctx = document.getElementById("graphCanvas").getContext("2d");
+
+      const labels = [];
+      const data = [];
+
+      for (let x = -10; x <= 10; x += 0.5) {
+        labels.push(x);
+        data.push(parseEquation(input, x));
+      }
+
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [{
+            label: `y = ${input}`,
+            data,
+            borderColor: 'cyan',
+            tension: 0.1
+          }]
+        },
+        options: {
+          scales: {
+            x: { title: { display: true, text: 'x' } },
+            y: { title: { display: true, text: 'y' } }
+          }
+        }
+      });
+    }
+  </script>
+<
